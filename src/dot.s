@@ -54,6 +54,8 @@ loop_start:
     mv a0, t2
     mv a1, t3
 
+    # mul a0, a0, a1
+
     jal ra, multiply
     add t0, t0, a0
     lw ra, 0(sp)
@@ -102,6 +104,7 @@ multiply:
 
 
 multiply_loop1:
+    beq a1,zero, equal_zero
     add t2, t2, a0
     addi t3, t3, 1
     blt t3, a1, multiply_loop1
@@ -109,10 +112,13 @@ multiply_loop1:
     ret
 
 multiply_loop2:
+    beq a0,zero, equal_zero
     add t2, t2, a1
     addi t3, t3, 1
     blt t3, a0, multiply_loop2
     mv a0, t2
     ret
-
+equal_zero:
+    mv a0, zero
+    ret
 
