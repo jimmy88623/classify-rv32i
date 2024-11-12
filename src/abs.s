@@ -21,6 +21,9 @@ abs:
     lw t0 0(a0)
     bge t0, zero, done
 
+    neg t0, t0
+    sw t0, 0(a0)
+    
     # TODO: Add your own implementation
 
 done:

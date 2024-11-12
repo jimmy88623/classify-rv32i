@@ -167,6 +167,13 @@ classify:
     lw t0, 0(s3)
     lw t1, 0(s8)
     # mul a0, t0, t1 # FIXME: Replace 'mul' with your own implementation
+    li a0, 0
+Loop_1:
+    beqz t0, end_1
+    add a0, a0, t1
+    addi t0,t0,-1
+    j Loop_1
+end_1:
     slli a0, a0, 2
     jal malloc 
     beq a0, x0, error_malloc
@@ -204,6 +211,13 @@ classify:
     lw t0, 0(s3)
     lw t1, 0(s8)
     # mul a1, t0, t1 # length of h array and set it as second argument
+    li a1, 0
+Loop_2:
+    beqz t0, end_2
+    add a1, a1, t1
+    addi t0,t0,-1
+    j Loop_2
+end_2:
     # FIXME: Replace 'mul' with your own implementation
     
     jal relu
@@ -227,6 +241,15 @@ classify:
     lw t0, 0(s3)
     lw t1, 0(s6)
     # mul a0, t0, t1 # FIXME: Replace 'mul' with your own implementation
+    li a0, 0
+Loop_3:
+    beqz t0, end_3
+    add a0, a0, t1
+    addi t0,t0,-1
+    j Loop_3
+end_3:
+
+
     slli a0, a0, 2
     jal malloc 
     beq a0, x0, error_malloc
@@ -286,7 +309,15 @@ classify:
     mv a0, s10 # load o array into first arg
     lw t0, 0(s3)
     lw t1, 0(s6)
-    mul a1, t0, t1 # load length of array into second arg
+
+    # mul a1, t0, t1 # load length of array into second arg
+    li a1, 0
+Loop_4:
+    beqz t0, end_4
+    add a1, a1, t1
+    addi t0,t0,-1
+    j Loop_4
+end_4:  
     # FIXME: Replace 'mul' with your own implementation
     
     jal argmax
@@ -352,7 +383,7 @@ epilouge:
     mv a0, s10
     jal free
     
-    lw a0, 0(sp)
+    lw a0, 0(sp)    
     addi sp, sp, 4
 
     lw ra, 0(sp)

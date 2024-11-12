@@ -76,6 +76,21 @@ read_matrix:
 
     # mul s1, t1, t2   # s1 is number of elements
     # FIXME: Replace 'mul' with your own implementation
+    addi sp, sp, -12
+    sw ra, 0(sp)
+    sw a0, 4(sp)
+    sw a1, 8(sp)
+
+    mv a0, t1
+    mv a1, t2
+
+    jal ra, multiply
+    add s1, zero, a0
+    lw ra, 0(sp)
+    lw a0, 4(sp)
+    lw a1, 8(sp)
+    addi sp, sp, 12
+
 
     slli t3, s1, 2
     sw t3, 24(sp)    # size in bytes
@@ -143,3 +158,26 @@ error_exit:
     lw s4, 20(sp)
     addi sp, sp, 40
     j exit
+
+multiply:
+    li t4, 0
+    li t5, 0
+    bge a0, zero, multiply_loop2
+    bge a1, zero, multiply_loop1
+    neg a0, a0
+    neg a1, a1
+    j multiply_loop1
+
+multiply_loop1:
+    add t4, t4, a0
+    addi t5, t5, 1
+    blt t5, a1, multiply_loop1
+    mv a0, t4
+    ret
+
+multiply_loop2:
+    add t4, t4, a1
+    addi t5, t5, 1
+    blt t5, a0, multiply_loop2
+    mv a0, t4
+    ret
