@@ -1,7 +1,7 @@
 # Assignment 2: Classify
 
 TODO: Add your own descriptions here.
-
+![alt text](image.png)
 ## abs.s
 
 ### RISC-V Code Section
